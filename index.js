@@ -27,14 +27,13 @@ app.get('/api/hello', function (req, res) {
 
 app.get('/api/whoami', (req, res) => {
 
-    const ipaddress = os.networkInterfaces().enp3s0[1].address;
+    const ipaddress = req.headers['x-forwarded-for'] || os.networkInterfaces().enp3s0[1].address;
     const language = req.headers['accept-language'];
     const software = req.headers['user-agent']; 
-    console.log(ipaddress);
-    console.log(language);
-    console.log(software);
 
     res.json({ipaddress, language, software});
+    //console.log(req);
+    //console.log(req.headers['x-forwarded-for']);
 });
 
 // listen for requests :)
